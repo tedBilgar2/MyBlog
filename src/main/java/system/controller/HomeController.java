@@ -14,6 +14,12 @@ public class HomeController {
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String getHomePage(){
         logger.info("Go to home");
-        return "home";
+        return "index";
+    }
+
+    @RequestMapping(value = "/index",method = RequestMethod.GET)
+    public String getIndex(){
+        logger.info("Go to index");
+        return "index2";
     }
 }
