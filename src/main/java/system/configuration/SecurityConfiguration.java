@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import system.service.UserDetailsServiceImpl;
 
 @Configuration
@@ -33,11 +35,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         http
                 .authorizeRequests()
                     .anyRequest().authenticated()
-                    .antMatchers("/**").permitAll()
                     .and()
                 .formLogin()
                     .loginPage("/login")
-                    .successForwardUrl("/")
+                    .loginProcessingUrl("processLogin")
+                    .defaultSuccessUrl("/")
+                    .usernameParameter("email")
+                    .passwordParameter("password")
                     .permitAll()
                 .and()
                 .logout()
@@ -45,4 +49,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                     .logoutSuccessUrl("/")
                     .permitAll();
     }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/assets/**");
+    }
+
 }
