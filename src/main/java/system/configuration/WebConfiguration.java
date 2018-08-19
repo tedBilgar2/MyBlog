@@ -1,8 +1,11 @@
 package system.configuration;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -13,8 +16,11 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import system.model.User;
 
 import javax.servlet.ServletContext;
+import javax.sql.DataSource;
+import java.util.Properties;
 
 /*
     Аннтотация конфигурация для поддержки конфигурации аналогично spring-config.xml
@@ -62,4 +68,38 @@ public class WebConfiguration implements WebMvcConfigurer{
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("classpath:/static/");
     }
+
+    @Bean
+    public DataSource dataSource(){
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/student_service?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+        dataSource.setUsername("root");
+        dataSource.setPassword("123456");
+        return dataSource;
+    }
+
+    @Bean
+    public LocalSessionFactoryBean sessionFactoryBean(){
+        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+        sessionFactoryBean.setDataSource(dataSource());
+
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
+        properties.setProperty("show_sql","true");
+
+        sessionFactoryBean.setHibernateProperties(properties);
+        sessionFactoryBean.setAnnotatedClasses(User.class);
+
+        return sessionFactoryBean;
+    }
+
+    @Bean
+    public HibernateTransactionManager transactionManager(){
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(sessionFactoryBean().getObject());
+        return transactionManager;
+    }
+
+
 }

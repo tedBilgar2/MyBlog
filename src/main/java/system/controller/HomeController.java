@@ -20,6 +20,6 @@ public class HomeController {
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String getIndex(){
         logger.info("Go to index");
-        return "index2";
+        return "angular";
     }
 }
