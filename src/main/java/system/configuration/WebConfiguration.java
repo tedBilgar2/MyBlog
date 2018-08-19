@@ -4,8 +4,10 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -17,6 +19,7 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import system.model.User;
+import system.service.UserDetailsServiceImpl;
 
 import javax.servlet.ServletContext;
 import javax.sql.DataSource;
@@ -28,11 +31,13 @@ import java.util.Properties;
     EnableWebMvc аналог mvc conf driven для поддежки слоев mvc
     componentScan аналог componentScan для автоматического поиска бинов в контексте, через аннотации @component, @service и тд.
     EnableTransactionManagment для поддежки работы с БД, когда мы берем данные через ДАО, методы которых @Transactional
+    WebMvcConf для обозначения пути ресурсов
  */
 @Configuration
 @EnableWebMvc
 @ComponentScan("system")
 @EnableTransactionManagement
+@Import({SecurityConfiguration.class})
 public class WebConfiguration implements WebMvcConfigurer{
    /* @Bean
     public ViewResolver viewResolver(){
@@ -65,7 +70,7 @@ public class WebConfiguration implements WebMvcConfigurer{
     }
 
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**")
+        registry.addResourceHandler("assets/**")
                 .addResourceLocations("classpath:/static/");
     }
 
@@ -101,5 +106,16 @@ public class WebConfiguration implements WebMvcConfigurer{
         return transactionManager;
     }
 
+    @Bean
+    public UserDetailsServiceImpl userDetailsService(){
+        UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl();
+        return userDetailsService;
+    }
 
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        int rounds = 4;
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(rounds);
+        return passwordEncoder;
+    }
 }

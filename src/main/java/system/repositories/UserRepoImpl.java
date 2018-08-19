@@ -32,6 +32,14 @@ public class UserRepoImpl implements UserRepo {
     }
 
     @Transactional
+    public User loadUserByEmail(String email) {
+        logger.info("Load user by email");
+        return (User) sessionFactory.getCurrentSession().createQuery("from User where email = :emailParam")
+                .setParameter("emailParam",email)
+                .uniqueResult();
+    }
+
+    @Transactional
     public List<User> loadAllUser() {
         logger.info("Load all users");
         return sessionFactory.getCurrentSession().createQuery("from User").list();

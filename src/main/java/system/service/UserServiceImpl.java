@@ -20,6 +20,10 @@ public class UserServiceImpl implements  UserService{
         return userRepo.loadUserById(id);
     }
 
+    public User loadUserByEmail(String email) {
+        return userRepo.loadUserByEmail(email);
+    }
+
     public List<User> loadAllUser() {
         return userRepo.loadAllUser();
     }
