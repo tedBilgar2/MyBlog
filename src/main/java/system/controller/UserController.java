@@ -16,30 +16,4 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/add",method = RequestMethod.GET)
-    public String addUser(){
-        User user = new User("papa149@mail.ru","123456");
-        userService.addUser(user);
-        return "index";
-    }
-
-    @RequestMapping(value = "/get",method = RequestMethod.GET)
-    public String getUser(){
-        //User user = new User("papa149@mail.ru","123456");
-        logger.info(userService.loadUserById("1"));
-        return "index";
-    }
-    @RequestMapping(value = "/update",method = RequestMethod.GET)
-    public String updateUser(){
-        User user = userService.loadUserById("1");
-        user.setEmail("denis.urakanov@yandex.ru");
-        userService.updateUser(user);
-        return "index";
-    }
-
-    @RequestMapping(value = "/delete",method = RequestMethod.GET)
-    public String deleteUser(){
-        userService.deleteUserById("1");
-        return "index";
-    }
 }

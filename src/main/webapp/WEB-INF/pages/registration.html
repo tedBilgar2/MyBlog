@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnalogTesla</title>
+    <link rel="stylesheet" th:href="@{/resources/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/fonts/ionicons.min.css}">
+    <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Montserrat:300,400,600}">
+    <link rel="stylesheet" th:href="@{/resources/css/Contact-Form-Clean.css}">
+    <link rel="stylesheet" th:href="@{https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.css}">
+    <link rel="stylesheet" th:href="@{/resources/css/Login-Form-Clean.css}">
+    <link rel="stylesheet" th:href="@{/resources/css/Login-Form-Dark.css}">
+    <link rel="stylesheet" th:href="@{/resources/css/Newsletter-Subscription-Form.css}">
+    <link rel="stylesheet" th:href="@{/resources/css/Registration-Form-with-Photo.css}">
+    <link rel="stylesheet" th:href="@{/resources/css/styles.css}">
+</head>
+
+<body>
+    <div class="register-photo">
+        <div class="form-container">
+            <div class="image-holder"></div>
+            <form method="post">
+                <h2 class="text-center"><strong>Create</strong> an account.</h2>
+                <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email"></div>
+                <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+                <div class="form-group"><input class="form-control" type="password" name="password-repeat" placeholder="Password (repeat)"></div>
+                <div class="form-group">
+                    <div class="form-check"><label class="form-check-label"><input class="form-check-input" type="checkbox">I agree to the license terms.</label></div>
+                </div>
+                <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Sign Up</button></div><a href="#" class="already">You already have an account? Login here.</a></form>
+        </div>
+    </div>
+    <script th:src="@{/resources/js/jquery.min.js}"></script>
+    <script th:src="@{/resources/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://unpkg.com/@bootstrapstudio/bootstrap-better-nav/dist/bootstrap-better-nav.min.js"></script>
+</body>
+
+</html>
