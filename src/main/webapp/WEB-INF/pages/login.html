@@ -20,11 +20,14 @@
 
 <body>
     <div class="login-dark">
-        <form th:action="@{/processLogin}" th:object="${user}" th:method="post">
+        <form th:action="@{/processLogin}" th:object="${user}" method="post">
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
             <div class="form-group"><input class="form-control" type="email" name="email" placeholder="Email" th:field="*{email}"></div>
             <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password" th:field="*{password}"></div>
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
             <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Log In</button></div><a href="#" class="forgot">Forgot your email or password?</a></form>
     </div>
     <script src="assets/js/jquery.min.js"></script>

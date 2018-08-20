@@ -9,7 +9,7 @@ import system.model.User;
 @Controller
 public class MainController {
 
-    @RequestMapping(value = "/",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String getMain(){
         return "index";
     }

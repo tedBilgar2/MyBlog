@@ -35,10 +35,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         http
                 .authorizeRequests()
                     .anyRequest().authenticated()
+                    .antMatchers("/").authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
-                    .loginProcessingUrl("processLogin")
+                    .loginProcessingUrl("/processLogin")
                     .defaultSuccessUrl("/")
                     .usernameParameter("email")
                     .passwordParameter("password")
